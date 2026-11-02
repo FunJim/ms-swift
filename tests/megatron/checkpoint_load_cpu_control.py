@@ -68,8 +68,8 @@ def main():
                     patch.object(utils.dist_checkpointing, 'load_common_state_dict',
                                  return_value={'args': checkpoint_args}), \
                     patch.object(utils, '_generate_state_dict', new=generate), \
-                    patch.object(utils, '_filter_adapter_state_dict'), \
-                    patch.object(utils, 'patch_merge_fn'), \
+                    patch.object(utils, '_filter_adapter_state_dict', new=lambda *args, **kwargs: None), \
+                    patch.object(utils, 'patch_merge_fn', new=lambda *args, **kwargs: None), \
                     patch.object(utils, 'TorchDistLoadShardedStrategy'), \
                     patch.object(utils, 'FullyParallelLoadStrategyWrapper'), \
                     patch.object(utils.mpu, 'get_data_parallel_group', return_value=None), \
