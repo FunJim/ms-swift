@@ -31,7 +31,7 @@ from packaging import version
 from transformers.utils import is_torch_npu_available
 from typing import Any, Callable, Dict, Optional
 
-from swift.utils import check_json_format, get_logger, init_process_group, is_master, set_device
+from swift.utils import check_json_format, gc_collect, get_logger, init_process_group, is_master, set_device
 from . import megatron_fsdp_checkpoint as fsdp_checkpoint
 from .patcher import patch_merge_fn
 
@@ -490,6 +490,18 @@ def load_mcore_checkpoint(args,
                           opt_param_scheduler=None,
                           load_arg: str = 'mcore_model',
                           adapter_name: str = 'default'):
+    iteration = _load_mcore_checkpoint(args, ddp_models, optimizer, opt_param_scheduler, load_arg, adapter_name)
+    # Release the loader's checkpoint references before collecting cycles and emptying the device cache.
+    gc_collect()
+    return iteration
+
+
+def _load_mcore_checkpoint(args,
+                           ddp_models: list,
+                           optimizer=None,
+                           opt_param_scheduler=None,
+                           load_arg: str = 'mcore_model',
+                           adapter_name: str = 'default'):
     if load_arg in {'mcore_adapter', 'mcore_ref_adapter'}:
         peft_format = True
     else:
