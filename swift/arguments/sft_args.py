@@ -190,6 +190,13 @@ class SftArguments(SwanlabArguments, TunerArguments, BaseArguments, Seq2SeqTrain
                 self.padding_free = True
             else:
                 feature = 'padding_free'
+            template_meta = getattr(self, 'template_meta', None)
+            if template_meta is not None:
+                support_padding_free = template_meta.template_cls.support_padding_free
+                if support_padding_free is None:
+                    support_padding_free = not self.model_meta.is_multimodal
+                if not support_padding_free:
+                    raise ValueError(f'Template `{self.template}` does not support padding free or packing.')
             supported_impls = ['flash_attn', 'flash_attention_2', 'flash_attention_3', 'flash_attention_4']
             if self.attn_impl not in supported_impls:
                 supported_impls_str = ', '.join([f'"{impl}"' for impl in supported_impls])

@@ -35,6 +35,7 @@ class LLMTemplateType:
     sus = 'sus'
     gpt_oss = 'gpt_oss'
     seed_oss = 'seed_oss'
+    flint = 'flint'
 
     minimax = 'minimax'
     minimax_m1 = 'minimax_m1'
@@ -134,9 +135,11 @@ class LLMTemplateType:
     youtu_llm = 'youtu_llm'
     olmoe = 'olmoe'
     olmoe_0924 = 'olmoe_0924'
+    olmo3 = 'olmo3'
     spark2_5 = 'spark2_5'
 
     generic_decision = 'generic_decision'
+    laya = 'laya'
 
 
 class RMTemplateType:
@@ -166,6 +169,9 @@ class MLLMTemplateType:
     clef = 'clef'
     omnijev = 'omnijev'
     kev = 'kev'
+    thx02 = 'thx02'
+    startlux = 'startlux'
+    h2o = 'h2o'
 
     qwen2_gme = 'qwen2_gme'
     qvq = 'qvq'
@@ -240,6 +246,7 @@ class MLLMTemplateType:
     minicpmv4_5 = 'minicpmv4_5'
     minicpmv4_6 = 'minicpmv4_6'
     minicpmv4_7 = 'minicpmv4_7'
+    minicpm_ocr = 'minicpm_ocr'
     minicpmo = 'minicpmo'
     minicpmo4_5 = 'minicpmo4_5'
 
@@ -300,6 +307,7 @@ class MLLMTemplateType:
     monkeyocrv2 = 'monkeyocrv2'
 
     nemotron_h_omni = 'nemotron_h_omni'
+    nemo_speechlm = 'nemo_speechlm'
 
 
 class TemplateType(LLMTemplateType, MLLMTemplateType, RMTemplateType):
